@@ -1,0 +1,56 @@
+drop database if exists filmoteca;
+
+CREATE database if not exists filmoteca CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE filmoteca;
+
+Create table if not exists directores(
+    `id_director` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `nombre` varchar(50) NOT NULL,
+    `flag` varchar(255),
+    `timestamp` timestamp NOT NULL
+);
+
+Create table if not exists peliculas(
+    `id_pelicula` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `titulo` varchar(50) NOT NULL,
+    `fechaEstreno` date NOT NULL,
+    `duracion` int NOT NULL,
+    `flag` varchar(255),
+    `timestamp` timestamp NOT NULL
+);
+
+Create table if not exists peliculas_directores(
+    `fk_director` int NOT NULL,
+    `fk_pelicula` int NOT NULL,
+    `flag` varchar(255),
+    `timestamp` timestamp NOT NULL,
+    FOREIGN KEY (fk_director) REFERENCES directores(id_director),
+    FOREIGN KEY (fk_pelicula) REFERENCES peliculas(id_pelicula)
+);
+
+
+#INSERT PELICULAS
+INSERT INTO peliculas(titulo, fechaEstreno, duracion) 
+VALUES ('La bella y la bestia', '2022-06-30' ,120) , 
+       ('Terminator 2', '2022-07-01' ,125),
+       ('Toy Story', '2022-08-12' ,130),
+       ('Gladiator', '2022-09-20' ,140);
+
+
+#INSERT DIRECTORES
+INSERT INTO directores (nombre) VALUES ('James Cameron'),('Jean Cocteau'),('John Lasseter'),('Ridley Scott');
+
+
+#INSERT peliculas+directores
+INSERT INTO peliculas_directores(fk_director, fk_pelicula)
+VALUES (1,10),(2,9),(3,11),(4,12);
+
+
+
+
+
+
+
+
+
