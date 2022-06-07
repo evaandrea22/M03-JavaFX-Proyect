@@ -140,7 +140,7 @@ public class AddDirectorController<Item> extends ConnectDb implements Initializa
         //Alert alert = new Alert();    No se encuentra el alert
         
         // Eliminar habitación
-        d.deleteHabitacion();
+        d.deleteDirector();
         //REFRESH
         iniciarLista();
     }

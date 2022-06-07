@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.ConnectDb;
+import Modelo.Directores;
 import Modelo.Menu;
 import java.io.IOException;
 
@@ -75,6 +76,13 @@ public class MenuController<Item> extends ConnectDb implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         iniciarLista();
+        try {
+            listaDirectores();
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }  
     //OK
     public void iniciarLista() {
@@ -137,6 +145,14 @@ public class MenuController<Item> extends ConnectDb implements Initializable{
         }
     }
     
+    //LISTAR LOS DIRECTORES
+     public void listaDirectores() throws SQLException, ClassNotFoundException {
+        Directores d = new Directores();
+        ObservableList<String> obsDirector = d.getDirectores();
+        this.boxDirectorPelicula.setItems(obsDirector);
+        
+    }
+    
     @FXML
     public void updPelicula(ActionEvent event) {
     }
@@ -184,7 +200,7 @@ public class MenuController<Item> extends ConnectDb implements Initializable{
         textTitulo.setText(String.valueOf(rowData.getTitulo()));
 //        fechaEstreno.setValue(String.valueOf(rowData.getFechaEstreno()));
         textDuracionPelicula.setText(String.valueOf(rowData.getDuracion()));
-//        boxDirectorPelicula.setValue(rowData.getNum_director());
+        boxDirectorPelicula.setValue(rowData.getDirector());
     }
     
     

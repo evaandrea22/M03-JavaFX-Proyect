@@ -24,7 +24,6 @@ public class Directores extends ConnectDb {
     private String nombre;
     
     //CONSTRUCTOR
-    
     public Directores() {
     }
 
@@ -163,12 +162,31 @@ public class Directores extends ConnectDb {
         
     }
 
-    public void deleteHabitacion() throws SQLException {
+    public void deleteDirector() throws SQLException {
         String sql = "DELETE FROM directores WHERE id_director = ?";
         PreparedStatement stmt = connectDb().prepareStatement(sql);
         stmt.setInt(1, this.id_director);
         System.out.println("DELETE "+stmt);
         stmt.execute();
     }
+
+    public ObservableList<String> getDirectores() throws SQLException {
+        ObservableList<String> lista = FXCollections.observableArrayList();
+        String sql ="SELECT * FROM directores";
+        PreparedStatement stmt = connectDb().prepareStatement(sql);
+        ResultSet result = stmt.executeQuery();
+        
+        String dir;
+        while (result.next()){
+            dir = new Directores(
+                result.getInt("id_director"),
+                result.getString("nombre")
+                    ).getNombre();
+                lista.add(dir);
+        }
+        return lista;
+    }
+    
+    
     
 }
